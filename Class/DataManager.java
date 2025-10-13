@@ -1,5 +1,4 @@
 package Class;
-
 import java.util.*;
 
 public class DataManager {

@@ -6,7 +6,6 @@ public class Booking {
     private String mobile;
     private int totalPrice;
     private String movieName;
-    //private String movieImage;
     private String date;
     private String time;
     private List<String> seats;
@@ -18,7 +17,6 @@ public class Booking {
         this.mobile = mobile;
         this.totalPrice = totalPrice;
         this.movieName = movieName;
-        //this.movieImage = movieImage;
         this.date = date;
         this.time = time;
         this.seats = new ArrayList<>(seats);
@@ -30,7 +28,6 @@ public class Booking {
     public String getMobile() { return mobile; }
     public int getTotalPrice() { return totalPrice; }
     public String getMovieName() { return movieName; }
-    //public String getMovieImage() { return movieImage; }
     public String getDate() { return date; }
     public String getTime() { return time; }
     public List<String> getSeats() { return new ArrayList<>(seats); }
