@@ -98,10 +98,10 @@ public class AdminPanel extends JFrame {
             panelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGap(0, 744, Short.MAX_VALUE)
         );
-        panelMainLayout.setVerticalGroup(
+        /*panelMainLayout.setVerticalGroup(
             panelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGap(0, 0, Short.MAX_VALUE)
-        );
+        );*/
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -122,7 +122,6 @@ public class AdminPanel extends JFrame {
         setLocationRelativeTo(null);
     }
 
-    // ===========================================================
     //  AdminP1 (Movie)
     private void showMoviePanel() {
         panelMain.removeAll();
@@ -131,7 +130,6 @@ public class AdminPanel extends JFrame {
         panelMain.repaint();
     }
 
-    // ===========================================================
     //  AdminP2 (Food Set)
     private void showFoodSetPanel() {
         panelMain.removeAll();
@@ -140,7 +138,6 @@ public class AdminPanel extends JFrame {
         panelMain.repaint();
     }
 
-    // ===========================================================
     public static void main(String args[]) {
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {

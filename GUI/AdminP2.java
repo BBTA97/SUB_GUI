@@ -1,7 +1,6 @@
 package GUI;
 
-import Class.DataManager;
-import Class.SetItem;
+import Class.*;
 import java.awt.*;
 import java.io.File;
 import java.util.List;
@@ -15,9 +14,7 @@ public class AdminP2 extends javax.swing.JPanel {
         initComponents();
         DataManager.loadAll();
         loadSetList();
-        
     }
-
                               
     private void initComponents() {
 
@@ -83,7 +80,7 @@ public class AdminP2 extends javax.swing.JPanel {
                         .addComponent(txtImage, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(ChooseImageButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 149, Short.MAX_VALUE)))
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -100,7 +97,7 @@ public class AdminP2 extends javax.swing.JPanel {
                 .addComponent(txtImage)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(ChooseImageButton, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(171, Short.MAX_VALUE))
+                .addContainerGap(185, Short.MAX_VALUE))
         );
 
         jPanel1.setBackground(new java.awt.Color(221, 208, 133));
@@ -131,12 +128,12 @@ public class AdminP2 extends javax.swing.JPanel {
         RightPanel.setLayout(RightPanelLayout);
         RightPanelLayout.setHorizontalGroup(
             RightPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(RightPanelLayout.createSequentialGroup()
-                .addGap(12, 12, 12)
-                .addGroup(RightPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, RightPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(RightPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(11, Short.MAX_VALUE))
+                .addContainerGap())
         );
         RightPanelLayout.setVerticalGroup(
             RightPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -144,8 +141,8 @@ public class AdminP2 extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         PanelMain1.setBackground(new java.awt.Color(111, 21, 21));
@@ -297,10 +294,8 @@ public class AdminP2 extends javax.swing.JPanel {
             .addComponent(PanelMain1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(RightPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
-    }                       
-
-    //==============================================================================
-
+    }                     
+    //=====================================================================
     private void loadSetList() {
         List<SetItem> sets = DataManager.getSets();
         JButton[] buttons = { FoodSet1, FoodSet2, FoodSet3, FoodSet4 };
@@ -310,32 +305,29 @@ public class AdminP2 extends javax.swing.JPanel {
 
             if (i < sets.size()) {
                 SetItem s = sets.get(i);
+                setFoodSetButtonImage(buttons[i], s, i);
                 btn.setText(s.getName());
 
-                if (s.getImagePath() != null && !s.getImagePath().isEmpty()) {
-                    try {
-                        ImageIcon icon = new ImageIcon(s.getImagePath());
-                        Image scaled = icon.getImage().getScaledInstance(90, 115, Image.SCALE_SMOOTH);
-                        btn.setIcon(new ImageIcon(scaled));
-                        btn.setHorizontalTextPosition(SwingConstants.CENTER);
-                        btn.setVerticalTextPosition(SwingConstants.BOTTOM);
-                    } catch (Exception e) {
-                        btn.setIcon(null);
-                    }
-                } else {
-                    btn.setIcon(null);
-                }
-
-                int index = i;
-                btn.addActionListener(e -> showSetDetail(index));
             } else {
                 btn.setText("Empty");
                 btn.setIcon(null);
             }
         }
-    }   
+    }
 
-    // =====================================================
+    // ภาพหนังในปุ่ม
+    private void setFoodSetButtonImage(JButton btn, SetItem s, int index) {
+        try {
+            ImageIcon icon = new ImageIcon(s.getImagePath());
+            Image scaled = icon.getImage().getScaledInstance(120, 180, Image.SCALE_SMOOTH);
+            btn.setIcon(new ImageIcon(scaled));
+        } catch (Exception e) {
+            btn.setText(s.getName());
+        }
+
+        btn.addActionListener(evt -> showSetDetail(index));
+    }
+
     // แสดงรายละเอียดของชุดอาหารทางขวา
     private void showSetDetail(int index) {
         List<SetItem> sets = DataManager.getSets();
@@ -357,8 +349,7 @@ public class AdminP2 extends javax.swing.JPanel {
         }
     }
 
-    //==============================================================================
-    private void ChooseImageButtonActionPerformed(java.awt.event.ActionEvent evt) {                                                  
+    private void chooseImage() {
         JFileChooser chooser = new JFileChooser();
         if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
             File f = chooser.getSelectedFile();
@@ -376,7 +367,12 @@ public class AdminP2 extends javax.swing.JPanel {
             } else {
                 selectedImagePath = fullPath; // กรณีไม่มีคำว่า Picture ใน path
             }
-        }     
+        }
+    }        
+     
+    //================================================================================
+    private void ChooseImageButtonActionPerformed(java.awt.event.ActionEvent evt) {                                                  
+        chooseImage();
     }                                                 
 
     private void AddButtonActionPerformed(java.awt.event.ActionEvent evt) {                                          
@@ -386,8 +382,8 @@ public class AdminP2 extends javax.swing.JPanel {
         loadSetList();
         //JOptionPane.showMessageDialog(this, "Add complete!");
         JOptionPane.showMessageDialog(this, "Add complete!", "Success", JOptionPane.INFORMATION_MESSAGE);
-    }                                         
-
+    }               
+                              
     private void SaveButtonActionPerformed(java.awt.event.ActionEvent evt) {                                           
         if (selectedIndex < 0) {
             JOptionPane.showMessageDialog(this, "Please Choose!", "Warning", JOptionPane.WARNING_MESSAGE);
@@ -395,9 +391,9 @@ public class AdminP2 extends javax.swing.JPanel {
         }
 
         String name = jTextField1.getText().trim();
-        double price;
+        int price;
         try {
-            price = Double.parseDouble(jTextField2.getText().trim());
+            price = Integer.parseInt(jTextField2.getText().trim());
         } catch (NumberFormatException e) {
             //JOptionPane.showMessageDialog(this, "Price should be number");
             JOptionPane.showMessageDialog(this, "Price should be number", "Warning", JOptionPane.WARNING_MESSAGE);
@@ -423,6 +419,10 @@ public class AdminP2 extends javax.swing.JPanel {
         JOptionPane.showMessageDialog(this, "Delete complete!", "Success", JOptionPane.INFORMATION_MESSAGE);
     }
 
+    // ใช้ List เพื่อเก็บปุ่มทั้งหมดที่เราจะสร้าง
+    private java.util.List<javax.swing.JButton> foodSetButtons = new java.util.ArrayList<>();
+    // Panel ใหม่สำหรับวางปุ่มทั้งหมดเป็นตาราง
+    private javax.swing.JPanel foodSetGridPanel;
     private javax.swing.JButton AddButton;
     private javax.swing.JButton ChooseImageButton;
     private javax.swing.JButton FoodSet1;

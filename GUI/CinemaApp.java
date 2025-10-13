@@ -9,7 +9,7 @@ public class CinemaApp extends JFrame {
     public CinemaApp() {
         setTitle("Cinema Ticket Booking");
         //setSize(900, 700);
-        setSize(1024, 768);
+        setSize(1150, 768);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         bookingSession = new BookingSession(); // เก็บค่า booking ทั้งหมด
@@ -44,24 +44,26 @@ public class CinemaApp extends JFrame {
     }
 
     // ไปหน้าเลือกที่นั่ง (Page3)
-    public void showPage3(String date, String time) {
+    public void showPage3(String movieName, String movieImage, String date, String time) {
+        bookingSession.setMovieName(movieName);
+        bookingSession.setMovieImage(movieImage);
         bookingSession.setDate(date);
         bookingSession.setTime(time);
-        setContentPane(new Page3Panel(this)); 
+        setContentPane(new Page3Panel(this, movieName, movieImage)); 
         revalidate();
         repaint();
     }
 
     // กลับไปหน้า 3 อีกครั้ง โดยใช้ค่าจาก session
     public void showPage3() {
-        setContentPane(new Page3Panel(this));
+        setContentPane(new Page3Panel(this, bookingSession.getMovieName(), bookingSession.getMovieImage()));
         revalidate();
         repaint();
     }
 
     // ไปหน้า 4 
     public void showPage4() {
-    setContentPane(new Page4Panel(this));  // ไม่ส่ง parameter
+    setContentPane(new Page4Panel(this, bookingSession.getMovieImage()));  // ไม่ส่ง parameter
     revalidate();
     repaint();
     }
@@ -74,8 +76,8 @@ public class CinemaApp extends JFrame {
     }
 
     // ไปหน้า 4.2 (ถ้าเลือก add-on)
-    public void showPage42(String setName, String price, String imageFile) {
-        setContentPane(new Page42Panel(this, setName, price, imageFile));
+    public void showPage42(String setName, String price, String imageFile, String movieImage) {
+        setContentPane(new Page42Panel(this, setName, price, imageFile, movieImage));
         revalidate();
         repaint();
     }
